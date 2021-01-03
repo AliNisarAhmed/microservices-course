@@ -4,20 +4,16 @@ import CommentCreate from './CommentCreate';
 import CommentList from './CommentList';
 
 const PostList = () => {
-	const [posts, setPosts] = useState(null);
+	const [posts, setPosts] = useState([]);
 
 	useEffect(() => {
 		fetchPosts();
 
 		async function fetchPosts() {
-			const res = await axios.get('http://localhost:4000/posts');
+			const res = await axios.get('http://localhost:4002/posts');
 			setPosts(res.data);
 		}
 	}, []);
-
-	if (posts === null) {
-		return <div>Loading...</div>;
-	}
 
 	if (Object.keys(posts).length === 0) {
 		return <div>No Posts yet...</div>;
@@ -33,7 +29,7 @@ const PostList = () => {
 				>
 					<div className="card-body">
 						<h3>{post.title}</h3>
-						<CommentList postId={post.id} />
+						<CommentList comments={post.comments} />
 						<CommentCreate postId={post.id} />
 					</div>
 				</div>
