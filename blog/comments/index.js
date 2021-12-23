@@ -26,13 +26,13 @@ app.post('/posts/:postId/comments', async (req, res) => {
 
 	console.log('Comment Created');
 
-	await axios.post('http://localhost:4005/events', {
+	await axios.post('http://event-bus-srv:4005/events', {
 		type: 'CommentCreated',
 		data: {
 			id: commentId,
 			content,
 			postId,
-			status: 'pending'
+			status: 'pending',
 		},
 	});
 
@@ -40,20 +40,20 @@ app.post('/posts/:postId/comments', async (req, res) => {
 });
 
 app.post('/events', async (req, res) => {
-	const {type, data} = req.body;
+	const { type, data } = req.body;
 	const { postId, id, status, content } = data;
 
 	console.log('Received Event in Comment Service', type);
 
 	if (type === 'CommentModerated') {
 		const comments = commentsByPostId[postId];
-		const comment = comments.find(c => c.id === id);
+		const comment = comments.find((c) => c.id === id);
 		comment.status = status;
 
-		await axios.post('http://localhost:4005/events', {
+		await axios.post('http://event-bus-srv:4005/events', {
 			type: 'CommentUpdated',
-			data
-		})
+			data,
+		});
 	}
 
 	res.send({});
