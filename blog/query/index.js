@@ -35,6 +35,7 @@ app.get('/posts', (req, res) => {
 
 app.post('/events', (req, res) => {
 	const { type, data } = req.body;
+	console.log('Event Received Query Service: ', type, data);
 
 	handleEvent(type, data);
 

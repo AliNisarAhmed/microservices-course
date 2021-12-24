@@ -22,7 +22,7 @@ const PostCreate = () => {
 
 	async function onSubmit(e) {
 		e.preventDefault();
-		await axios.post('http://localhost:4000/posts', {
+		await axios.post('http://posts.com/posts/create', {
 			title,
 		});
 		setTitle('');

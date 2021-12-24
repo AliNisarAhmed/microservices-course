@@ -15,10 +15,12 @@ app.post('/events', (req, res) => {
 
 	console.log('Event received: ', event);
 
-	axios.post('http://posts-clusterip-srv:4000/events', event);
-	axios.post('http://comments-srv:4001/events', event);
-	axios.post('http://query-srv:4002/events', event);
-	axios.post('http://moderation-srv:4003/events', event);
+	axios
+		.post('http://posts-clusterip-srv:4000/events', event)
+		.catch((e) => console.log('error: ', e));
+	axios.post('http://comments-srv:4001/events', event).catch((e) => console.log('error: ', e));
+	axios.post('http://query-srv:4002/events', event).catch((e) => console.log('error: ', e));
+	axios.post('http://moderation-srv:4003/events', event).catch((e) => console.log('error: ', e));
 
 	res.send({ status: 'OK' });
 });
