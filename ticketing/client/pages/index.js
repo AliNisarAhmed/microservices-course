@@ -1,3 +1,3 @@
-const Landing = () => <div>Banana</div>;
+const Landing = () => <div><h1>Landing</h1></div>;
 
 export default Landing;
