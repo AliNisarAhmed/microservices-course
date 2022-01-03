@@ -4,12 +4,16 @@ import { app } from './app';
 
 async function start() {
 	if (!process.env.JWT_KEY) {
-		throw new Error('JWT_KEY must be defined');
+		throw new Error('Auth Service: JWT_KEY must be defined');
+	}
+
+	if (!process.env.MONGO_URI) {
+		throw new Error('Auth Service: MONGO_URI must be defined')
 	}
 
 	try {
-		await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
-		console.log('Connected to Mongodb');
+		await mongoose.connect(process.env.MONGO_URI);
+		console.log('Auth Service: Connected to Mongodb');
 	} catch (error) {
 		console.error(error);
 	}
