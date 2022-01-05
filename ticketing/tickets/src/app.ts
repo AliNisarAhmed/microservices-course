@@ -2,7 +2,8 @@ import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
-import { errorHandler, NotFoundError } from '@microservices-course-ali/common';
+import { currentUser, errorHandler, NotFoundError } from '@microservices-course-ali/common';
+import { createTicketRouter } from './routes/new';
 
 const app = express();
 
@@ -17,6 +18,12 @@ app.use(
 		secure: process.env.NODE_ENV !== 'test',
 	})
 );
+
+app.use(currentUser);
+
+app.use(createTicketRouter);
+
+app.use(errorHandler);
 
 app.all('*', () => {
 	throw new NotFoundError();
