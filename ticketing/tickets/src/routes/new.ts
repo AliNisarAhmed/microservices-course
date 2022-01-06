@@ -19,7 +19,7 @@ router.post(
 		const ticket = Ticket.build({ title, price, userId: req.currentUser!.id });
 
 		await ticket.save();
-		return res.status(200).json(ticket);
+		return res.status(201).json(ticket);
 	}
 );
 
