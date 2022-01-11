@@ -1,4 +1,4 @@
-import { Publisher } from './base-publisher';
+import { Publisher } from './publisher';
 import { TicketCreatedEvent } from './ticket-created-event';
 import { Subjects } from './subjects';
 
