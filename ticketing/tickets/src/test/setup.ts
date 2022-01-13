@@ -33,6 +33,8 @@ global.signin = () => {
 
 // ====
 
+jest.mock('../nats-wrapper');
+
 let mongo: MongoMemoryServer;
 
 beforeAll(async () => {
@@ -45,6 +47,8 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+	jest.clearAllMocks();
+
 	const collections = await mongoose.connection.db.collections();
 
 	for (let collection of collections) {
