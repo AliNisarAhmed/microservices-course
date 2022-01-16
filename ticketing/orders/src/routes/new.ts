@@ -57,7 +57,7 @@ router.post(
 
 		// Publish an event saying that an order was created
 
-		return res.json({});
+		return res.status(201).json(order);
 	}
 );
 
