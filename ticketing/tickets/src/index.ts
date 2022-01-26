@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import { natsWrapper } from './nats-wrapper';
 
 import { app } from './app';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-event';
 
 async function start() {
 	if (!process.env.JWT_KEY) {
@@ -39,6 +41,9 @@ async function start() {
 		process.on('SIGNTER', () => {
 			natsWrapper.client.close;
 		});
+
+		new OrderCreatedListener(natsWrapper.client).listen();
+		new OrderCancelledListener(natsWrapper.client).listen();
 
 		await mongoose.connect(process.env.MONGO_URI!);
 		console.log('Tickets Service: Connected to Mongodb');

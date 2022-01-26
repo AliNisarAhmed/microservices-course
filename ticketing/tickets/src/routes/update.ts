@@ -2,6 +2,7 @@ import express, { request, Request, Response } from 'express';
 import { body } from 'express-validator';
 
 import {
+	BadRequestError,
 	NotAuthorizedError,
 	NotFoundError,
 	requireAuth,
@@ -28,6 +29,11 @@ router.put(
 			throw new NotFoundError();
 		}
 
+		// if the ticket has an orderId, that means it is already reserved
+		if (ticket.orderId) {
+			throw new BadRequestError('Cannot edit a reserved ticket');
+		}
+
 		if (ticket.userId !== req.currentUser!.id) {
 			throw new NotAuthorizedError();
 		}
@@ -44,7 +50,7 @@ router.put(
 			title: ticket.title,
 			price: ticket.price,
 			userId: ticket.userId,
-			version: ticket.version
+			version: ticket.version,
 		});
 
 		return res.json(ticket);
