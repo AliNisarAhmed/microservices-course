@@ -7,6 +7,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 	readonly subject = Subjects.TicketUpdated;
 	queueGroupName = queueGroupName;
 
+	// On TicketUpdatedEvent: Update the ticket details in the local db
 	async onMessage(event: TicketUpdatedEvent['data'], msg: Message) {
 		const ticket = await Ticket.findByEvent(event);
 

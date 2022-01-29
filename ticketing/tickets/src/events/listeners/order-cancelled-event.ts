@@ -13,6 +13,9 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
 	readonly subject = Subjects.OrderCancelled;
 	queueGroupName = queueGroupName;
 
+	// on OrderCancelledEvent:
+	// remove the orderId from the ticket in local db
+	// and publish a TicketUpdatedEvent
 	async onMessage(data: OrderCancelledEvent['data'], msg: Message) {
 		const ticket = await Ticket.findById(data.ticket.id);
 

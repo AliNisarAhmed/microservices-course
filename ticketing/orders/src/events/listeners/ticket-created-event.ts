@@ -7,6 +7,7 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
 	readonly subject = Subjects.TicketCreated;
 	queueGroupName = queueGroupName;
 
+	// On TicketCreatedEvent: store the ticket in the local database
 	async onMessage(data: TicketCreatedEvent['data'], msg: Message) {
 		const { id, title, price } = data;
 		const ticket = Ticket.build({ id, title, price });

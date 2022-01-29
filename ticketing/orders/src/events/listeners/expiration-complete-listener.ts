@@ -14,6 +14,9 @@ export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent
 	readonly subject = Subjects.ExpirationComplete;
 	queueGroupName = queueGroupName;
 
+	// on ExpirationCompleteEvent:
+	// Cancel the order
+	// and publish the OrderCancelledEvent
 	async onMessage(data: ExpirationCompleteEvent['data'], msg: Message) {
 		const order = await Order.findById(data.orderId).populate('ticket');
 

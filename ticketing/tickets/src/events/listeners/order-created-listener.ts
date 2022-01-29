@@ -13,6 +13,9 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 	readonly subject = Subjects.OrderCreated;
 	queueGroupName = queueGroupName;
 
+	// on OrderCreatedEvent:
+	// Store the order Id in the ticket in local db
+	// publish a TicketUpdatedEvent
 	async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
 		const ticket = await Ticket.findById(data.ticket.id);
 
