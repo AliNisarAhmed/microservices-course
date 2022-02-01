@@ -3,6 +3,7 @@ import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
 import { currentUser, errorHandler, NotFoundError } from '@microservices-course-ali/common';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 app.use(errorHandler);
 

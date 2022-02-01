@@ -5,13 +5,13 @@ import { Buffer } from 'buffer';
 
 // creating a global auth function for ease of access, can also be defined in a module
 declare global {
-	var signin: () => string[];
+	var signin: (id?: string) => string[];
 }
 
-global.signin = () => {
+global.signin = (id?: string) => {
 	// Build a JWT payload { id, email }
 	const payload = {
-		id: new mongoose.Types.ObjectId().toHexString(),
+		id: id ?? new mongoose.Types.ObjectId().toHexString(),
 		email: 'test@test.com',
 	};
 
