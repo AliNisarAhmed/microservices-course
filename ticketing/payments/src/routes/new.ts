@@ -9,6 +9,7 @@ import {
 	OrderStatus,
 } from '@microservices-course-ali/common';
 import { Order } from '../models/order';
+import { stripe } from '../stripe';
 
 const router = express.Router();
 
@@ -33,6 +34,12 @@ router.post(
 		if (order.status === OrderStatus.Cancelled) {
 			throw new BadRequestError('Order has been cancelled');
 		}
+
+		await stripe.charges.create({
+			currency: 'usd',
+			amount: order.price * 100,
+			source: token,
+		});
 
 		return res.send({ success: true });
 	}
