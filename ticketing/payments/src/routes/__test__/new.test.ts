@@ -3,6 +3,7 @@ import mongoose, { mongo } from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { Order } from '../../models/order';
+import { Payment } from '../../models/payment';
 import { stripe } from '../../stripe';
 
 // old method of testing - mocking instead of actually calling the stripe API
@@ -92,6 +93,10 @@ it('returns a 2014 with valid inputs', async () => {
 
 	expect(stripeCharge).toBeDefined();
 	expect(stripeCharge?.currency).toEqual('usd');
+
+	const payment = await Payment.findOne({ orderId: order.id, stripeId: stripeCharge!.id });
+
+	expect(payment).not.toBeNull();
 
 	// ========= OLD ===============
 	// const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];

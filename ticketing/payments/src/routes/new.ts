@@ -9,6 +9,7 @@ import {
 	OrderStatus,
 } from '@microservices-course-ali/common';
 import { Order } from '../models/order';
+import { Payment } from '../models/payment';
 import { stripe } from '../stripe';
 
 const router = express.Router();
@@ -35,11 +36,18 @@ router.post(
 			throw new BadRequestError('Order has been cancelled');
 		}
 
-		await stripe.charges.create({
+		const charge = await stripe.charges.create({
 			currency: 'usd',
 			amount: order.price * 100,
 			source: token,
 		});
+
+		const payment = Payment.build({
+			orderId,
+			stripeId: charge.id,
+		});
+
+		await payment.save();
 
 		return res.status(201).send({ success: true });
 	}
