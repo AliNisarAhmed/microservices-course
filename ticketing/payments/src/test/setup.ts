@@ -35,6 +35,8 @@ global.signin = (id?: string) => {
 
 jest.mock('../nats-wrapper');
 
+process.env.STRIPE_KEY = 'sk_test_51KQ2A7AMMZu4Uf9zobUc0ykxbX4v5kyZMlrocTjL4q3xBtH7yiV4P6N0CPRHMXewfq6GAacVZXoCDfHNhmDJXYEB0021Z2r9Wo';
+
 let mongo: MongoMemoryServer;
 
 beforeAll(async () => {
