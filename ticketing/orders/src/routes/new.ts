@@ -16,10 +16,11 @@ import { OrderCreatedPublisher } from '../events/publishers/order-created-publis
 
 const router = express.Router();
 
-const EXPIRATION_WINDOW_SECONDS = 15 * 60;
+const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 
 router.post(
 	'/api/orders',
+	requireAuth,
 	body('ticketId')
 		.not()
 		.isEmpty()
@@ -28,6 +29,7 @@ router.post(
 		.custom((input: string) => mongoose.Types.ObjectId.isValid(input))
 		.withMessage('TicketId must be provided'),
 	async (req: Request, res: Response) => {
+    console.log("🚀 ~ file: new.ts ~ line 32 ~ req", req.currentUser)
 		// Make sure the ticket exists in the database
 		const { ticketId } = req.body;
 

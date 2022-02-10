@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useRequest from '../../hooks/useRequest';
-import Router from 'next/Router';
+import Router from 'next/router';
 
 const NewTicket = () => {
 	const [title, setTitle] = useState('');
