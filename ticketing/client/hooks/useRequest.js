@@ -4,10 +4,10 @@ import { useState } from 'react';
 export default ({ url, method = 'get', body = {}, onSuccess = () => {} }) => {
 	const [errors, setErrors] = useState(null);
 
-	const doRequest = async () => {
+	const doRequest = async (props = {}) => {
 		try {
 			setErrors(null);
-			const res = await axios[method](url, body);
+			const res = await axios[method](url, { ...body, ...props });
 			onSuccess(res.data);
 		} catch (error) {
 			setErrors(
