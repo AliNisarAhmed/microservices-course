@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import useRequest from '../../hooks/useRequest';
+import Router from 'next/router';
 
 const OrderShow = ({ order, currentUser }) => {
 	const [timeLeft, setTimeLeft] = useState(0);
@@ -10,7 +11,7 @@ const OrderShow = ({ order, currentUser }) => {
 		body: {
 			orderId: order.id,
 		},
-		onSuccess: () => Router.push(),
+		onSuccess: Router.push('/orders'),
 	});
 
 	useEffect(() => {
@@ -49,7 +50,6 @@ const OrderShow = ({ order, currentUser }) => {
 
 OrderShow.getInitialProps = async (context, client) => {
 	const { orderId } = context.query;
-	console.log('🚀 ~ file: [orderId].jsx ~ line 25 ~ OrderShow.getIntialProps= ~ orderId', orderId);
 	const { data } = await client.get(`/api/orders/${orderId}`);
 	return { order: data };
 };

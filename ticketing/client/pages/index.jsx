@@ -4,11 +4,6 @@ const LandingPage = ({ currentUser, tickets }) => {
 	return (
 		<div>
 			<h1>Tickets</h1>
-			{currentUser && (
-				<Link href="/tickets/new" as="/tickets/new">
-					<a>Create a Ticket</a>
-				</Link>
-			)}
 			<table className="table">
 				<thead>
 					<tr>

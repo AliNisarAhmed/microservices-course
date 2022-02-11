@@ -16,7 +16,6 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 };
 
 AppComponent.getInitialProps = async (appContext) => {
-	console.log('APP COMPONENT', !!appContext.ctx.req);
 	const client = buildClient(appContext.ctx);
 
 	const {
